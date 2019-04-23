@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/importardatos', 'HomeController@importer')->name('importer');
-Route::get('/importardatos', 'HomeController@importExamples')->name('importer');
+Route::get('/verdatos', 'HomeController@show')->name('show');
+Route::get('/importardatos', 'HomeController@importer')->name('importer');
 Route::post('/importardatos', 'HomeController@handleImporter')->name('handleImporter');
 Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');

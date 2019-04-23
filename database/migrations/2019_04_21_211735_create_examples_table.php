@@ -15,8 +15,8 @@ class CreateExamplesTable extends Migration
     {
         Schema::create('examples', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('isbn13')->nullable;
-            $table->integer('ean')->nullable;
+            $table->string('isbn13')->nullable;
+            $table->string('ean')->nullable;
             $table->string('titulo')->nullable;
             $table->timestamps();
         });

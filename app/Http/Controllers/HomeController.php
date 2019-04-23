@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Example;
-use App\Imports\ExamplesImport;
+use App\Book;
+use App\Imports\BooksImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
@@ -30,6 +30,13 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function show()
+    {
+        $books = Book::all();
+
+        return view('viewdata', compact('books'));
+    }
     public function importer()
     {
         return view('importfile');
@@ -38,14 +45,19 @@ class HomeController extends Controller
     {
         return view('importfile');
     }
-    public function handleImporter()
+    public function handleImporter(Request $request)
     {
 
-        $importados = Excel::toArray(new ExamplesImport, 'examplesBook.xlsx');
-/*         
-        return redirect('/')->with('success', 'All good!');
-       */ 
-      /* return Example::all();  */
+        
+         
+       if($request->hasFile('file')){
+        $path = $request->file('file')->getRealPath();
+        $importados = Excel::import(new BooksImport, $path);
+       }
+
+       return back()->withErrors(['msg', 'The Message']);
+      /*
+      return back();
          /* dd($importados); */ 
     }
 

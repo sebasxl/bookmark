@@ -21,7 +21,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i> Ver Datos</a></li>
+            <li><a href="{{ route('show') }}"><i class="fa fa-circle-o"></i> Ver Datos</a></li>
             <li><a href="{{ route('importer') }}"><i class="fa fa-circle-o"></i> Importar Datos</a></li>
             <li><a href="{{ route('exporter') }}"><i class="fa fa-circle-o"></i> Exportar a Archivo</a></li>
           </ul>
