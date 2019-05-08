@@ -33,7 +33,7 @@ class HomeController extends Controller
 
     public function show()
     {
-        $books = Book::all();
+        $books = Book::paginate(50);
 
         return view('viewdata', compact('books'));
     }
@@ -47,22 +47,35 @@ class HomeController extends Controller
     }
     public function handleImporter(Request $request)
     {
+        if($file = $request->file('file')){
+            $name = $file->getClientOriginalName();
+           
+           $originalFile = $file->move('files', $name);
+           $path = $originalFile->getRealPath();
+           Excel::import(new BooksImport, $path);
+        } 
+        return redirect()->route('show');
 
-        
-         
-       if($request->hasFile('file')){
-        $path = $request->file('file')->getRealPath();
-        $importados = Excel::import(new BooksImport, $path);
-       }
+    }
 
-       return back()->withErrors(['msg', 'The Message']);
-      /*
-      return back();
-         /* dd($importados); */ 
+    public function importjsonmegustaleer()
+    {
+        return view('megustaleerimport');
+    }
+
+    public function handleJSONImporter(Request $request)
+    {
+        $url = $request->input('url');
+        $json = json_decode(file_get_contents($url), true);
+        /* dd ($json); */
+
+        return view('megustaleerview', compact('json'));
     }
 
     public function exporter()
     {
         return view('export2file');
     }
+
+
 }

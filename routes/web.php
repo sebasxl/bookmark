@@ -14,10 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/api/json', 'ApiController@getJson')->name('json');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/importar-datos-megustaleer', 'HomeController@importjsonmegustaleer')->name('importjsonmegustaleer');
+Route::post('/step2-datos-megustaleer', 'HomeController@handleJSONImporter')->name('handleJSONImporter');
 //Route::get('/importardatos', 'HomeController@importer')->name('importer');
 Route::get('/verdatos', 'HomeController@show')->name('show');
 Route::get('/importardatos', 'HomeController@importer')->name('importer');

@@ -6,12 +6,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Importar datos desde XLS
+        Importar datos desde JSON
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Importar Datos desde XLS</li>
+        <li class="active">Importar Datos desde JSON</li>
       </ol>
     </section>
 
@@ -24,19 +24,16 @@
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Seleccione el archivo a importar</h3>
+              <h3 class="box-title">Ingrese la URL del archivo JSON</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="{{ route('handleImporter') }}" method="post" enctype="multipart/form-data">
+            <form role="form" action="{{ route('handleJSONImporter') }}" method="post">
             @csrf
                 <div class="box-body">
                 <div class="form-group">
-                  <label for="file">Archivo:</label>
-                  <input type="file" id="file" name="file">
-                
-
-                  <p class="help-block">Solo se permiten archivos XLSX.</p>
+                  <label for="file">URL:</label>
+                  <input type="text" id="url" name="url">
                 </div>
               </div>
               <!-- /.box-body -->

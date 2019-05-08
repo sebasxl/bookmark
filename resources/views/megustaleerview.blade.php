@@ -11,7 +11,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">Datos extraidos de MeGustaLeer</li>
       </ol>
     </section>
 
@@ -21,7 +21,7 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                {{ $books->links() }}
+                
 
               <div class="box-tools pull-right">
                 
@@ -51,24 +51,19 @@
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach($books as $book)
+                  @foreach($json as $data)
                   <tr>
-                    <td>{{ $book->cod_articulo }}</td>
-                    <td>{{ $book->isbn13 }}</td>
-                    <td>{{ $book->titulo }}</td>
-                    <td>{{ $book->apellido_autor }}</td>
-                    <td>{{ $book->nombre_autor }}</td>
-                    <td>{{ $book->editorial }}</td>
-                    <td>{{ $book->coleccion }}</td>
-                    <td>{{ $book->tipo }}</td>
-                    <td>{{ $book->genero }}</td>
-                    <td> <img src="{{ $book->portada }}" width=50px; alt=""></td>
-                    
-                    <td>{{ $book->formato }}</td>
-                    <td>{{ $book->fecha_publicacion }}</td>
-                    <td>{{ $book->edicion }}</td>
-                    <td>{{ $book->agotado }}</td>
-                    <td>{{ $book->activo }}</td>
+                    <td>{{ $data['matnr'] }}</td>
+                    <td>{{ $data['isbn'] }}</td>
+                    <td>{{ $data['titulo'] }}</td>
+                    <td>{{ $data['autor'] }}</td>
+                    <td>{{ $data['cod_sello_editorial'] }}</td>
+                    <td>{{ $data['sello_editorial'] }}</td>
+                    <td>{{ $data['coleccion'] }}</td>
+                    <td><img src="{{ $data['portada'] }}" alt=""></td>
+                    <td>{{ $data['subtitulo'] }}</td>
+                    <td>{{ $data['paginas'] }}</td>
+                    <td>{{ $data['medidas'] }}</td>
                   </tr>
                   @endforeach
                   </tbody>
@@ -82,7 +77,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-            {{ $books->links() }}
+            
             </div>
             <!-- /.box-footer -->
           </div>
