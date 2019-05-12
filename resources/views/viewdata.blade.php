@@ -33,42 +33,32 @@
                 <table class="table no-margin">
                   <thead>
                   <tr>
-                    <th>Codigo Art.</th>                    
                     <th>ISBN13</th>                   
                     <th>Título</th>                    
-                    <th>Apellido Autor</th>
-                    <th>Nombre Autor</th>
+                    <th>Apellido y Nombre</th>
+                    
                     <th>Editorial</th>
-                    <th>Coleccion</th>
-                    <th>Tipo</th>
-                    <th>Genero</th>
-                    <th>Portada</th>
-                    <th>formato</th>
+                    
+                    
                     <th>F. Public</th>
-                    <th>edicion</th>
-                    <th>agotado</th>
-                    <th>activo</th>
+                    <th>PVP</th>
+                    <th>Portada</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach($books as $book)
                   <tr>
-                    <td>{{ $book->cod_articulo }}</td>
                     <td>{{ $book->isbn13 }}</td>
                     <td>{{ $book->titulo }}</td>
-                    <td>{{ $book->apellido_autor }}</td>
-                    <td>{{ $book->nombre_autor }}</td>
+                    <td>{{ $book->apellido_autor }}, {{ $book->nombre_autor }}</td>
+                    
                     <td>{{ $book->editorial }}</td>
-                    <td>{{ $book->coleccion }}</td>
-                    <td>{{ $book->tipo }}</td>
-                    <td>{{ $book->genero }}</td>
+                    
+                    
+                    <td>{{ $book->fecha_publicacion }}</td>
+                    <td>{{ $book->pvp }}</td>
                     <td> <img src="{{ $book->portada }}" width=50px; alt=""></td>
                     
-                    <td>{{ $book->formato }}</td>
-                    <td>{{ $book->fecha_publicacion }}</td>
-                    <td>{{ $book->edicion }}</td>
-                    <td>{{ $book->agotado }}</td>
-                    <td>{{ $book->activo }}</td>
                   </tr>
                   @endforeach
                   </tbody>

@@ -34,7 +34,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Descargar CSV</button>
+                <a href="{{ route('export2csv')}}" class="btn btn-primary">Descargar CSV</a>
               </div>
             </form>
           </div>

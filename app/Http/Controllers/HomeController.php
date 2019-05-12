@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Book;
 use App\Json;
@@ -22,7 +23,7 @@ class HomeController extends Controller
 
     public function show()
     {
-        $books = Book::paginate(50);
+        $books = Book::orderBy('id', 'DESC')->paginate(50);
 
         return view('viewdata', compact('books'));
     }
@@ -57,30 +58,35 @@ class HomeController extends Controller
     {
         $url = $request->input('url');
         $json = json_decode(file_get_contents($url), true);
-
+        
         foreach ($json as $data)
         {
-            if (Book::where('isbn10', $data['matnr'])->exists()) {
-                return 'existe';
+            if (Book::where('isbn10', $data['matnr'])->exists()) { 
+            /* if (Book::first() == $data['matnr'] ) {*/
+                echo 'existe '.$data['matnr'].'<br>';
             } else {
-                return 'no existe';
-            }
-            
-            /* $booksimported = new Book([
+
+                $urlImage = $data['portada'];
+                $imageContents = file_get_contents($urlImage);
+                $imageName = substr($urlImage, strrpos($urlImage, '/') + 1);
+                Storage::put($imageName, $imageContents);
+                $localUrlImage = Storage::url($imageName);
                 
-                'isbn10'    => $data['matnr'],
-                'isbn13'    => $data['isbn'],
-                'titulo'    => $data['titulo'],
-                'subtitulo' => $data['subtitulo'],
-                'apellido_autor'    => $data['autor'],
-                'coleccion' => $data['coleccion'],
-                'portada'   => $data['portada'],
-                'paginas'   => $data['paginas'],
-                'medidas'   => $data['medidas'],
-            ]); 
-            $booksimported->save(); */
+                $booksimported = new Book([
+                
+                    'isbn10'    => $data['matnr'],
+                    'isbn13'    => $data['isbn'],
+                    'titulo'    => $data['titulo'],
+                    'subtitulo' => $data['subtitulo'],
+                    'apellido_autor'    => $data['autor'],
+                    'coleccion' => $data['coleccion'],
+                    'portada'   => $localUrlImage,
+                    'paginas'   => $data['paginas'],
+                    'medidas'   => $data['medidas'],
+                ]); 
+                $booksimported->save();
+            }
         }
-        
         
         return redirect()->route('show');
        /*  dd ($json); */
@@ -91,6 +97,47 @@ class HomeController extends Controller
     public function exporter()
     {
         return view('export2file');
+    }
+
+    public function export2csv()
+    {
+        $books = Book::get(); // All books
+        $csvExporter = new \Laracsv\Export();
+        $csvExporter->build($books, [
+            'cod_articulo',
+            'isbn10',
+            'isbn13',
+            'ean',
+            'titulo',
+            'subtitulo',
+            'apellido_autor',
+            'nombre_autor',
+            'biografia_autor',
+            'ilustrador',
+            'traductor',
+            'editorial',
+            'coleccion',
+            'categoria',
+            'tipo',
+            'genero',
+            'sinopsis',
+            'contratapa',
+            'metadata',
+            'portada',
+            'booktrailer',
+            'digital',
+            'idioma',
+            'formato',
+            'fecha_publicacion',
+            'edicion',
+            'pvp',
+            'moneda',
+            'paginas',
+            'medidas',
+            'peso',
+            'agotado',
+            'activo'
+        ])->download();
     }
 
 
