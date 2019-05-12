@@ -29,7 +29,7 @@
         
         <li class="header">ENLACES</li>
         <li><a href="{{ route('json') }}"><i class="fa fa-circle-o text-red"></i> <span>API JSON</span></a></li>
-        <li><a href="{{ route('importjsonmegustaleer') }}"><i class="fa fa-circle-o text-yellow"></i> <span>Import megustaleer</span></a></li>
+        <li><a href="{{ route('importjson') }}"><i class="fa fa-circle-o text-yellow"></i> <span>Importar desde JSON</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>
     </section>

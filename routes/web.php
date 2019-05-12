@@ -19,8 +19,9 @@ Route::get('/api/json', 'ApiController@getJson')->name('json');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/importar-datos-megustaleer', 'HomeController@importjsonmegustaleer')->name('importjsonmegustaleer');
-Route::post('/step2-datos-megustaleer', 'HomeController@handleJSONImporter')->name('handleJSONImporter');
+Route::get('/importar-datos-json', 'HomeController@importjson')->name('importjson');
+Route::post('/importar-datos-json', 'HomeController@handleJSON2Database')->name('handleJSON2Database');
+Route::get('/step3-datos-json/{id}', 'HomeController@handleJson')->name('handleJSONMGLImporter');
 //Route::get('/importardatos', 'HomeController@importer')->name('importer');
 Route::get('/verdatos', 'HomeController@show')->name('show');
 Route::get('/importardatos', 'HomeController@importer')->name('importer');

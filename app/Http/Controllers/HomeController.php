@@ -4,28 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use App\Json;
 use App\Imports\BooksImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-/*     use Illuminate\Support\Facades\Validator;
- */    public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         return view('home');
@@ -58,18 +47,45 @@ class HomeController extends Controller
 
     }
 
-    public function importjsonmegustaleer()
+    public function importjson()
     {
-        return view('megustaleerimport');
+        
+        return view('importjsonview');
     }
 
-    public function handleJSONImporter(Request $request)
+    public function handleJSON2Database(Request $request)
     {
         $url = $request->input('url');
         $json = json_decode(file_get_contents($url), true);
-        /* dd ($json); */
 
-        return view('megustaleerview', compact('json'));
+        foreach ($json as $data)
+        {
+            if (Book::where('isbn10', $data['matnr'])->exists()) {
+                return 'existe';
+            } else {
+                return 'no existe';
+            }
+            
+            /* $booksimported = new Book([
+                
+                'isbn10'    => $data['matnr'],
+                'isbn13'    => $data['isbn'],
+                'titulo'    => $data['titulo'],
+                'subtitulo' => $data['subtitulo'],
+                'apellido_autor'    => $data['autor'],
+                'coleccion' => $data['coleccion'],
+                'portada'   => $data['portada'],
+                'paginas'   => $data['paginas'],
+                'medidas'   => $data['medidas'],
+            ]); 
+            $booksimported->save(); */
+        }
+        
+        
+        return redirect()->route('show');
+       /*  dd ($json); */
+        /* return view('megustaleerimport', compact('json')); */
+
     }
 
     public function exporter()

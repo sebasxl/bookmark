@@ -18,43 +18,45 @@
     <!-- Main content -->
     <section class="content">
 
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ingrese la URL del archivo JSON</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" action="{{ route('handleJSONImporter') }}" method="post">
-            @csrf
-                <div class="box-body">
-                <div class="form-group">
-                  <label for="file">URL:</label>
-                  <input type="text" id="url" name="url">
+
+      <div class="row">
+            <div class="col-md-12">
+
+                <div class="box">
+
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <table class="table table-condensed">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Libreria</th>
+                                    <th>URL</th>
+
+                                </tr>
+                                @foreach ($json as $data)
+                                <tr>
+                                    <td>{{ $data['isbn'] }}</td>
+                                    <td>{{ $data['titulo'] }}</td>
+                                    <td>
+                                    {{ $data['paginas'] }}
+                                    </td>
+
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
                 </div>
-              </div>
-              <!-- /.box-body -->
 
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Enviar Archivo</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.box -->
-
-
+            </div>
+            <!-- /.col -->
         </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
 
-        </div>
-        <!--/.col (right) -->
-      </div>
-      <!-- /.row -->
+
+
     </section>
     <!-- /.content -->
   </div>
