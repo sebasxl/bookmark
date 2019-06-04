@@ -45,24 +45,24 @@
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
-        <div class="box box-warning">
-            <div class="box-header with-border">
+        <!--<div class="box box-warning">
+             <div class="box-header with-border">
               <h3 class="box-title">O realizar un Backup de la Base de datos</h3>
-            </div>
+            </div> -->
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <!-- <form role="form">
               <div class="box-body">
-              Esto realizará una copia completa de la base de datos y se descargará a su PC mediante un archivo .sql
+              Esto realizará una copia completa de la base de datos y se descargará a su PC mediante un archivo .sql -->
 
               <!-- /.box-body -->
 
-              <div class="box-footer">
+              <!-- <div class="box-footer">
               <button type="submit" class="btn btn-primary">Hacer Backup</button>
               </div>
             </form>
-          </div>
-        </div>
+          </div>-->
+        </div> 
         <!--/.col (right) -->
       </div>
       <!-- /.row -->

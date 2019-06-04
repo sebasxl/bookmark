@@ -37,6 +37,7 @@ class HomeController extends Controller
     }
     public function handleImporter(Request $request)
     {
+        
         if($file = $request->file('file')){
             $name = $file->getClientOriginalName();
            
@@ -65,12 +66,12 @@ class HomeController extends Controller
             /* if (Book::first() == $data['matnr'] ) {*/
                 echo 'existe '.$data['matnr'].'<br>';
             } else {
-
+/* 
                 $urlImage = $data['portada'];
                 $imageContents = file_get_contents($urlImage);
                 $imageName = substr($urlImage, strrpos($urlImage, '/') + 1);
                 Storage::put($imageName, $imageContents);
-                $localUrlImage = Storage::url($imageName);
+                $localUrlImage = Storage::url($imageName); */
                 
                 $booksimported = new Book([
                 
@@ -78,11 +79,24 @@ class HomeController extends Controller
                     'isbn13'    => $data['isbn'],
                     'titulo'    => $data['titulo'],
                     'subtitulo' => $data['subtitulo'],
-                    'apellido_autor'    => $data['autor'],
+                    'apellido_autor' => $data['autor'],
                     'coleccion' => $data['coleccion'],
-                    'portada'   => $localUrlImage,
+                    'portada'   => $data['portada'],/* $localUrlImage, */
                     'paginas'   => $data['paginas'],
                     'medidas'   => $data['medidas'],
+
+
+                    'editorial' => $data['sello_editorial'],
+                    'categoria' => $data['GROUP_CONCAT(DISTINCT zzbisac SEPARATOR ", ")'],
+                    'genero'    => $data['genero_1'],
+                    'sinopsis'  =>  $data['sinopsis'],
+                    'contratapa' => $data['contratapa'],
+                    'metadata' => $data['keywords'],
+                    'booktrailer' => $data['url_booktrailer'],
+                    'digital' => $data['digital'],
+                    'idioma' => $data['idioma'],
+                    'fecha_publicacion' => $data['fecha_nov'],
+                    'pvp'   => $data['pvp'],
                 ]); 
                 $booksimported->save();
             }

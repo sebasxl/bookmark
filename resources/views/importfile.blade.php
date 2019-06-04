@@ -38,6 +38,7 @@
 
                   <p class="help-block">Solo se permiten archivos XLSX.</p>
                 </div>
+                
               </div>
               <!-- /.box-body -->
 

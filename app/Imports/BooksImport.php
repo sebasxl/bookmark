@@ -51,6 +51,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
                 'peso'  => $row[30],
                 'agotado'   => $row[31],
                 'activo'    => $row[32],
+                'idorigen' =>  $row[33]
             ]);
        return $booksimported;
         

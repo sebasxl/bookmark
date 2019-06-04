@@ -33,31 +33,37 @@
                 <table class="table no-margin">
                   <thead>
                   <tr>
-                    <th>ISBN13</th>                   
-                    <th>Título</th>                    
-                    <th>Apellido y Nombre</th>
+                    <th></th>
+                    <th>ISBN</th>                   
+                    <th>TITULO</th>                    
+                    <th>AUTOR</th>
                     
-                    <th>Editorial</th>
+                    <th>EDITORIAL</th>
                     
                     
-                    <th>F. Public</th>
-                    <th>PVP</th>
-                    <th>Portada</th>
+                    <th>PUBLICACION</th>
+                    <th>PRECIO</th>
+                    
                   </tr>
                   </thead>
                   <tbody>
                   @foreach($books as $book)
                   <tr>
-                    <td>{{ $book->isbn13 }}</td>
-                    <td>{{ $book->titulo }}</td>
-                    <td>{{ $book->apellido_autor }}, {{ $book->nombre_autor }}</td>
+                    <td> <img src="{{ $book->portada }}" width=50px; alt=""></td>
+                    <td class="vertical">{{ $book->ean }}</td>
+                    <td class="vertical">{{ $book->titulo }}</td>
+                    <td>{{ $book->apellido_autor }} {{ $book->nombre_autor }}</td>
                     
                     <td>{{ $book->editorial }}</td>
                     
                     
                     <td>{{ $book->fecha_publicacion }}</td>
-                    <td>{{ $book->pvp }}</td>
-                    <td> <img src="{{ $book->portada }}" width=50px; alt=""></td>
+                    @if ($book->pvp)
+                    <td>${{ $book->pvp }}</td>
+                    @else
+                    <td>NO</td>
+                    @endif
+                    
                     
                   </tr>
                   @endforeach
