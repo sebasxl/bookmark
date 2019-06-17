@@ -17,6 +17,8 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
     */
     public function model(array $row)
     { 
+        $ud = $row[24];
+        $formatting = substr($ud, 0, 2) .'/'. substr($ud, 2,2) .'/'. substr($ud,4,4);
             $booksimported = new Book([
                 'cod_articulo'  => $row[0],
                 'isbn10'    => $row[1],
@@ -42,7 +44,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
                 'digital'   => $row[21],
                 'idioma'    => $row[22],
                 'formato'   => $row[23],
-                'fecha_publicacion' => $row[24],
+                'fecha_publicacion' => $formatting,
                 'edicion'   => $row[25],
                 'pvp'   => $row[26],
                 'moneda'    => $row[27],

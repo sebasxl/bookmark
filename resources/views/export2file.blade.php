@@ -29,12 +29,12 @@
             <!-- /.box-header -->
             <!-- form start -->
             <div class="box-body">
-                Mediante esta acción se descargará un archivo CSV separado por ; (Punto y Coma)
+                Mediante esta acción se descargará un archivo con formato XLSX
             </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <a href="{{ route('export2csv')}}" class="btn btn-primary">Descargar CSV</a>
+                <a href="{{ route('export2csv')}}" class="btn btn-primary">Descargar XLS</a>
               </div>
             </form>
           </div>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+
+    protected $publicationDates = ['fecha_publicacion'];
     protected $fillable = [       
             'cod_articulo',
             'isbn10',
@@ -41,4 +43,9 @@ class Book extends Model
             'agotado',
             'activo'           
     ];
+
+    public function getPublicationDateAttribute($fecha_publicacion)
+{
+    return Carbon::parse($fecha_publicacion);
+}
 }

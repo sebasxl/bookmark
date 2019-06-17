@@ -56,8 +56,11 @@
                     
                     <td>{{ $book->editorial }}</td>
                     
-                    
+                    @if( $book->fecha_publicacion == '//')
+                    <td>SIN FECHA</td>
+                    @else
                     <td>{{ $book->fecha_publicacion }}</td>
+                    @endif
                     @if ($book->pvp)
                     <td>${{ $book->pvp }}</td>
                     @else

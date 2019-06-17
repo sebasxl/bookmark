@@ -48,6 +48,7 @@ class CreateBooksTable extends Migration
             $table->string('peso')->nullable();
             $table->string('agotado')->nullable();
             $table->string('activo')->nullable();
+            $table->string('idorigen')->nullable();
             $table->timestamps();
         });
     }

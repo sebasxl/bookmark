@@ -27,5 +27,5 @@ Route::get('/verdatos', 'HomeController@show')->name('show');
 Route::get('/importardatos', 'HomeController@importer')->name('importer');
 Route::post('/importardatos', 'HomeController@handleImporter')->name('handleImporter');
 Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');
-Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');
-Route::get('/exportar-a-csv', 'HomeController@export2csv')->name('export2csv');
+/* Route::get('/exportardatos', 'HomeController@exporter')->name('exporter'); */
+Route::get('/exportar-a-csv', 'HomeController@export')->name('export2csv');

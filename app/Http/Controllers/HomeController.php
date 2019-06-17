@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\Json;
 use App\Imports\BooksImport;
+use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -27,6 +29,12 @@ class HomeController extends Controller
 
         return view('viewdata', compact('books'));
     }
+
+    public function export() 
+    {
+        return Excel::download(new BooksExport, 'books.xlsx');
+    }
+
     public function importer()
     {
         return view('importfile');
