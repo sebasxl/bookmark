@@ -29,6 +29,7 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    base_path('storage/app/Bookmark')
                 ],
 
                 /*
@@ -92,7 +93,7 @@ return [
         /*
          * The directory where the temporary files will be stored.
          */
-        'temporary_directory' => storage_path('app/backup-temp'),
+        'temporary_directory' => storage_path('/storage'),
     ],
 
     /*
@@ -120,7 +121,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'your@example.com',
+            'to' => 'fernando.zambra@promage.com.ar',
         ],
 
         'slack' => [

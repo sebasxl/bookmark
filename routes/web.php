@@ -29,3 +29,9 @@ Route::post('/importardatos', 'HomeController@handleImporter')->name('handleImpo
 Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');
 /* Route::get('/exportardatos', 'HomeController@exporter')->name('exporter'); */
 Route::get('/exportar-a-csv', 'HomeController@export')->name('export2csv');
+
+Route::get('/hacer-backup', function () {
+    Artisan::call('backup:run');
+    session()->flash('notif','Backup Realizado!');
+    return redirect()->route('exporter');
+});
