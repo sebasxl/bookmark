@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Book;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::get('/json', 'ApiController@getJson')->name('json');
 Route::get('json',function(){
     return Book::all();
-});
+})->name('json');
 
