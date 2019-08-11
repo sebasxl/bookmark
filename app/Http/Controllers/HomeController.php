@@ -10,6 +10,7 @@ use App\Imports\BooksImport;
 use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use Session;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,25 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function find(Request $request){
+
+        $finder = $request->input('finder');
+        $books = Book::where('isbn13', 'like', '%'.$finder.'%')
+            ->orWhere('ean', 'like', '%'.$finder.'%')
+            ->orWhere('titulo', 'like', '%'.$finder.'%')
+            ->orWhere('apellido_autor', 'like', '%'.$finder.'%')
+            ->orWhere('editorial', 'like', '%'.$finder.'%')
+            ->orderBy('id', 'DESC')->paginate(50);
+
+            if (count($books) > 0)
+                return view('viewdata', compact('books'));
+            else
+                Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
+                return view('viewdata', compact('books'));
+
+
+    }
+
     public function show()
     {
         $books = Book::orderBy('id', 'DESC')->paginate(50);
@@ -30,7 +50,7 @@ class HomeController extends Controller
         return view('viewdata', compact('books'));
     }
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new BooksExport, 'books.xlsx');
     }
@@ -45,21 +65,21 @@ class HomeController extends Controller
     }
     public function handleImporter(Request $request)
     {
-        
+
         if($file = $request->file('file')){
             $name = $file->getClientOriginalName();
-           
+
            $originalFile = $file->move('files', $name);
            $path = $originalFile->getRealPath();
            Excel::import(new BooksImport, $path);
-        } 
+        }
         return redirect()->route('show');
 
     }
 
     public function importjson()
     {
-        
+
         return view('importjsonview');
     }
 
@@ -67,22 +87,22 @@ class HomeController extends Controller
     {
         $url = $request->input('url');
         $json = json_decode(file_get_contents($url), true);
-        
+
         foreach ($json as $data)
         {
-            if (Book::where('isbn10', $data['matnr'])->exists()) { 
+            if (Book::where('isbn10', $data['matnr'])->exists()) {
             /* if (Book::first() == $data['matnr'] ) {*/
                 echo 'existe '.$data['matnr'].'<br>';
             } else {
-/* 
+/*
                 $urlImage = $data['portada'];
                 $imageContents = file_get_contents($urlImage);
                 $imageName = substr($urlImage, strrpos($urlImage, '/') + 1);
                 Storage::put($imageName, $imageContents);
                 $localUrlImage = Storage::url($imageName); */
-                
+
                 $booksimported = new Book([
-                
+
                     'isbn10'    => $data['matnr'],
                     'isbn13'    => $data['isbn'],
                     'titulo'    => $data['titulo'],
@@ -105,11 +125,11 @@ class HomeController extends Controller
                     'idioma' => $data['idioma'],
                     'fecha_publicacion' => $data['fecha_nov'],
                     'pvp'   => $data['pvp'],
-                ]); 
+                ]);
                 $booksimported->save();
             }
         }
-        
+
         return redirect()->route('show');
        /*  dd ($json); */
         /* return view('megustaleerimport', compact('json')); */

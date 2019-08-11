@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('/json', 'ApiController@getJson')->name('json');
+Route::get('json',function(){
+    return Book::all();
+});
+

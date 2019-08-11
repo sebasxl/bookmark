@@ -14,7 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/api/json', 'ApiController@getJson')->name('json');
 
 Auth::routes();
 
@@ -29,6 +28,8 @@ Route::post('/importardatos', 'HomeController@handleImporter')->name('handleImpo
 Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');
 /* Route::get('/exportardatos', 'HomeController@exporter')->name('exporter'); */
 Route::get('/exportar-a-csv', 'HomeController@export')->name('export2csv');
+
+Route::get('/buscador', 'HomeController@find')->name('buscador');
 
 Route::get('/hacer-backup', function () {
     Artisan::call('backup:run');

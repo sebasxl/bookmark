@@ -13,6 +13,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPAL</li>
+
         <li class="active treeview">
           <a href="{{ route('home') }}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -26,7 +27,7 @@
             <li><a href="{{ route('exporter') }}"><i class="fa fa-circle-o"></i> Exportar a Archivo</a></li>
           </ul>
         </li>
-        
+
         <li class="header">ENLACES</li>
         <li><a href="{{ route('json') }}"><i class="fa fa-circle-o text-red"></i> <span>API JSON</span></a></li>
         <li><a href="{{ route('importjson') }}"><i class="fa fa-circle-o text-yellow"></i> <span>Importar desde JSON</span></a></li>

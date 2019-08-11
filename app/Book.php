@@ -41,7 +41,8 @@ class Book extends Model
             'medidas',
             'peso',
             'agotado',
-            'activo'           
+            'activo',
+            'idorigen'
     ];
 
     public function getPublicationDateAttribute($fecha_publicacion)
