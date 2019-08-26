@@ -24,23 +24,46 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function find(Request $request){
-
+    public function find(Request $request)
+    {
         $finder = $request->input('finder');
-        $books = Book::where('isbn13', 'like', '%'.$finder.'%')
-            ->orWhere('ean', 'like', '%'.$finder.'%')
-            ->orWhere('titulo', 'like', '%'.$finder.'%')
-            ->orWhere('apellido_autor', 'like', '%'.$finder.'%')
-            ->orWhere('editorial', 'like', '%'.$finder.'%')
-            ->orderBy('id', 'DESC')->paginate(50);
 
-            if (count($books) > 0)
-                return view('viewdata', compact('books'));
-            else
-                Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
-                return view('viewdata', compact('books'));
+        if ($finder[0] == '"' && $finder[strlen($finder) - 1] == '"') {
+            $findme = trim($finder, '"');
 
+            $books = Book::where('isbn13', 'like', '%' . $findme . '%')
+                ->orWhere('ean', 'like', '%' . $findme . '%')
+                ->orWhere('titulo', 'like', '%' . $findme . '%')
+                ->orWhere('nombre_autor', 'LIKE', "%$string%")
+                ->orWhere('apellido_autor', 'like', '%' . $findme . '%')
+                ->orWhere('editorial', 'like', '%' . $findme . '%')
+                ->orderBy('id', 'DESC')
+                ->paginate(50);
+        } else {
+            $findme = trim($finder, '"');
 
+            $books = Book::where(function ($q) use ($findme) {
+                $queryString = array_unique(explode(' ', $findme));
+
+                foreach ($queryString as $string) {
+                    $q->where(function ($qq) use ($string) {
+                        $qq->orWhere('isbn13', 'like', "%$string%")
+                            ->orWhere('ean', 'LIKE', "%$string%")
+                            ->orWhere('titulo', 'LIKE', "%$string%")
+                            ->orWhere('nombre_autor', 'LIKE', "%$string%")
+                            ->orWhere('apellido_autor', 'LIKE', "%$string%")
+                            ->orWhere('editorial', 'LIKE', "%$string%");
+                    });
+                }
+            })->orderBy('id', 'DESC')
+                ->paginate(50);
+        }
+
+        if (count($books) > 0)
+            return view('viewdata', compact('books', 'finder'));
+        else
+            Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
+        return view('viewdata', compact('books', 'finder'));
     }
 
     public function show()
@@ -59,19 +82,21 @@ class HomeController extends Controller
     {
         return view('importfile');
     }
+
     public function importExamples()
     {
         return view('importfile');
     }
+
     public function handleImporter(Request $request)
     {
 
-        if($file = $request->file('file')){
+        if ($file = $request->file('file')) {
             $name = $file->getClientOriginalName();
 
-           $originalFile = $file->move('files', $name);
-           $path = $originalFile->getRealPath();
-           Excel::import(new BooksImport, $path);
+            $originalFile = $file->move('files', $name);
+            $path = $originalFile->getRealPath();
+            Excel::import(new BooksImport, $path);
         }
         return redirect()->route('show');
 
@@ -88,13 +113,12 @@ class HomeController extends Controller
         $url = $request->input('url');
         $json = json_decode(file_get_contents($url), true);
 
-        foreach ($json as $data)
-        {
+        foreach ($json as $data) {
             if (Book::where('isbn10', $data['matnr'])->exists()) {
-            /* if (Book::first() == $data['matnr'] ) {*/
-                echo 'existe '.$data['matnr'].'<br>';
+                /* if (Book::first() == $data['matnr'] ) {*/
+                echo 'existe ' . $data['matnr'] . '<br>';
             } else {
-/*
+                /*
                 $urlImage = $data['portada'];
                 $imageContents = file_get_contents($urlImage);
                 $imageName = substr($urlImage, strrpos($urlImage, '/') + 1);
@@ -103,35 +127,35 @@ class HomeController extends Controller
 
                 $booksimported = new Book([
 
-                    'isbn10'    => $data['matnr'],
-                    'isbn13'    => $data['isbn'],
-                    'titulo'    => $data['titulo'],
+                    'isbn10' => $data['matnr'],
+                    'isbn13' => $data['isbn'],
+                    'titulo' => $data['titulo'],
                     'subtitulo' => $data['subtitulo'],
                     'apellido_autor' => $data['autor'],
                     'coleccion' => $data['coleccion'],
-                    'portada'   => $data['portada'],/* $localUrlImage, */
-                    'paginas'   => $data['paginas'],
-                    'medidas'   => $data['medidas'],
+                    'portada' => $data['portada'],/* $localUrlImage, */
+                    'paginas' => $data['paginas'],
+                    'medidas' => $data['medidas'],
 
 
                     'editorial' => $data['sello_editorial'],
                     'categoria' => $data['GROUP_CONCAT(DISTINCT zzbisac SEPARATOR ", ")'],
-                    'genero'    => $data['genero_1'],
-                    'sinopsis'  =>  $data['sinopsis'],
+                    'genero' => $data['genero_1'],
+                    'sinopsis' => $data['sinopsis'],
                     'contratapa' => $data['contratapa'],
                     'metadata' => $data['keywords'],
                     'booktrailer' => $data['url_booktrailer'],
                     'digital' => $data['digital'],
                     'idioma' => $data['idioma'],
                     'fecha_publicacion' => $data['fecha_nov'],
-                    'pvp'   => $data['pvp'],
+                    'pvp' => $data['pvp'],
                 ]);
                 $booksimported->save();
             }
         }
 
         return redirect()->route('show');
-       /*  dd ($json); */
+        /*  dd ($json); */
         /* return view('megustaleerimport', compact('json')); */
 
     }

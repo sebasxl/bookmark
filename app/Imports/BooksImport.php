@@ -12,14 +12,16 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 
  class BooksImport implements ToModel, WithChunkReading
 {
-    /**
-    * @param Collection $collection
-    */
+     /**
+      * @param Collection $collection
+      * @return Book
+      */
     public function model(array $row)
-    { 
+    {
+        dd($row);
         $ud = $row[24];
         $formatting = substr($ud, 0, 2) .'/'. substr($ud, 2,2) .'/'. substr($ud,4,4);
-            $booksimported = new Book([
+        $booksimported = new Book([
                 'cod_articulo'  => $row[0],
                 'isbn10'    => $row[1],
                 'isbn13'    => $row[2],
@@ -56,21 +58,21 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
                 'idorigen' =>  $row[33]
             ]);
        return $booksimported;
-        
-        
+
+
     }
 
     public function chunkSize(): int
     {
         return 100;
     }
-} 
+}
 
 /* class BooksImport implements ToCollection
 {
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) 
+        foreach ($rows as $row)
         {
             Book::create([
                 'cod_articulo'  => $row[0],
