@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
       */
     public function model(array $row)
     {
-        dd($row);
+        //dd($row);
         $ud = $row[24];
         $formatting = substr($ud, 0, 2) .'/'. substr($ud, 2,2) .'/'. substr($ud,4,4);
         $booksimported = new Book([
