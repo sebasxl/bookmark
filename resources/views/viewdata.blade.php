@@ -118,7 +118,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">{{ $book->titulo }} </h4>
+                                <h3 class="modal-title text-center bg-blue"><strong>{{ $book->titulo }}</strong> </h3>
                             </div>
                             <div class="modal-body">
                                 <p>
@@ -130,40 +130,34 @@
                                         <th></th>
                                     </tr>
                                     <tr>
-                                        <td><span class="link-black text-sm">ISBN: </span>{{ $book->isbn13 }}</td>
                                         <td><span class="link-black text-sm">EAN: </span>{{ $book->ean }}</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td><span class="link-black text-sm">Ilustrador: </span>{{ $book->ilustrador }}
-                                        </td>
-                                        <td><span
-                                                class="link-black text-sm">Edición: </span>{{ $book->fecha_publicacion }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="link-black text-sm">Traductor: </span>{{ $book->traductor }}
-                                        </td>
-                                        <td><span
-                                                class="link-black text-sm">Editorial: </span><strong>{{ $book->editorial }}</strong>
+                                        <td><span  class="link-black text-sm">Fecha de Pub.: </span>{{ $book->fecha_publicacion }}</td>
+                                        <td>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><span class="link-black text-sm">Colección: </span>{{ $book->coleccion }}
-                                        </td>
-                                        <td><span class="link-black text-sm">Categoría: </span>{{ $book->categoria }}
+                                        <td><span class="link-black text-sm">Colección: </span>{{ $book->coleccion }}</td>
+                                        <td>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><span class="link-black text-sm">Tipo: </span>{{ $book->tipo }}</td>
                                         <td><span class="link-black text-sm">Género: </span>{{ $book->genero }}</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><span
-                                                class="link-black text-sm">Título: </span>{{ $book->titulo }}</td>
+                                        <td colspan="2"><span class="link-black text-sm">Editorial: </span><strong>{{ $book->editorial }}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><span
-                                                class="link-black text-sm">Autor: </span>{{ $book->apellido_autor }} {{ $book->nombre_autor }}
+                                        <td colspan="2"><span class="link-black text-sm">Autor: </span><strong>{{ $book->apellido_autor }} {{ $book->nombre_autor }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr><td colspan="2"></td></tr>
+                                    <tr>
+                                        <td colspan="4"><span class="link-black text-sm">Subtitulo: </span><strong>{{ $book->subtitulo }}</strong>
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -171,17 +165,13 @@
                                             {{ $book->sinopsis }}</td>
                                     </tr>
                                     <tr>
-                                        <td><span class="link-black text-sm">Edición: </span>{{ $book->edicion }}</td>
+                                        <td></td>
                                         <td><span class="link-black text-sm">Páginas: </span>{{ $book->paginas }}</td>
-                                        <td><span class="link-black text-sm">Medidas: </span>{{ $book->medidas }}</td>
-                                        <td><span class="link-black text-sm">Agotado? </span>{{ $book->agotado }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="link-black text-sm">Precio Venta: $</span>{{ $book->pvp }}</td>
                                         <td><span class="link-black text-sm">Idioma: </span>{{ $book->idioma }}</td>
-                                        <td><span class="link-black text-sm">Peso: </span>{{ $book->peso }}</td>
-                                        <td><span class="link-black text-sm">Activo? </span> {{ $book->activo }}</td>
+                                        <td><span class="link-black text-sm">Precio Venta: $</span>
+                                            <span class="badge bg-yellow">{{ $book->pvp }}</span></td>
                                     </tr>
+
                                 </table>
                                 </p>
                             </div>

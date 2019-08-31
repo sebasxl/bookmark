@@ -34,9 +34,9 @@ class HomeController extends Controller
             $books = Book::where('isbn13', 'like', '%' . $findme . '%')
                 ->orWhere('ean', 'like', '%' . $findme . '%')
                 ->orWhere('titulo', 'like', '%' . $findme . '%')
-                ->orWhere('nombre_autor', 'LIKE', "%$string%")
+                ->orWhere('nombre_autor', 'LIKE', '%' . $findme . '%')
                 ->orWhere('apellido_autor', 'like', '%' . $findme . '%')
-                ->orWhere('editorial', 'like', '%' . $findme . '%')
+                ->orWhere('metadata', 'like', '%' . $findme . '%')
                 ->orderBy('id', 'DESC')
                 ->paginate(50);
         } else {
@@ -52,7 +52,7 @@ class HomeController extends Controller
                             ->orWhere('titulo', 'LIKE', "%$string%")
                             ->orWhere('nombre_autor', 'LIKE', "%$string%")
                             ->orWhere('apellido_autor', 'LIKE', "%$string%")
-                            ->orWhere('editorial', 'LIKE', "%$string%");
+                            ->orWhere('metadata', 'LIKE', "%$string%");
                     });
                 }
             })->orderBy('id', 'DESC')
