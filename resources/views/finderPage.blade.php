@@ -6,9 +6,9 @@
         <!-- Content Header (Page header) -->
         <section class="content-header row">
             <div class="col-md-9">
-                {{--                 <h2>
-                                        <small>Version 1.1</small>
-                                      </h2> --}}
+               <h3>
+                                        <small>Hemos encontrado {{ $books->count() }} resultados</small>
+                                      </h3>
             </div>
 
 
@@ -38,14 +38,9 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
 
-                            @if(Session::has('flash_message'))
-
-                                <div class="alert alert-danger" role="alert"> {{Session::get('flash_message')}}</div>
-
-                            @endif
 
 
-                            {{ $books->links() }}
+
 
                             <div class="box-tools pull-right">
 
@@ -102,7 +97,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
-                            {{ $books->links() }}
+
                         </div>
                         <!-- /.box-footer -->
                     </div>

@@ -31,8 +31,7 @@ class HomeController extends Controller
         if ($finder[0] == '"' && $finder[strlen($finder) - 1] == '"') {
             $findme = trim($finder, '"');
 
-            $books = Book::where('isbn13', 'like', '%' . $findme . '%')
-                ->orWhere('ean', 'like', '%' . $findme . '%')
+            $books = Book::where('ean', 'like', '%' . $findme . '%')
                 ->orWhere('titulo', 'like', '%' . $findme . '%')
                 ->orWhere('nombre_autor', 'LIKE', '%' . $findme . '%')
                 ->orWhere('apellido_autor', 'like', '%' . $findme . '%')
@@ -47,23 +46,26 @@ class HomeController extends Controller
 
                 foreach ($queryString as $string) {
                     $q->where(function ($qq) use ($string) {
-                        $qq->orWhere('isbn13', 'like', "%$string%")
+                        $qq
                             ->orWhere('ean', 'LIKE', "%$string%")
                             ->orWhere('titulo', 'LIKE', "%$string%")
                             ->orWhere('nombre_autor', 'LIKE', "%$string%")
                             ->orWhere('apellido_autor', 'LIKE', "%$string%")
-                            ->orWhere('metadata', 'LIKE', "%$string%");
+                            /*->orWhere('metadata', 'LIKE', "%$string%")*/;
                     });
                 }
             })->orderBy('id', 'DESC')
                 ->paginate(50);
         }
 
-        if (count($books) > 0)
+        if (count($books) <= 0){
             return view('viewdata', compact('books', 'finder'));
-        else
             Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
-        return view('viewdata', compact('books', 'finder'));
+        }else{
+            return view('finderPage', compact('books', 'finder'));
+        }
+
+
     }
 
     public function show()
