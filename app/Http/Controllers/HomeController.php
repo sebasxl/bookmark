@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Book;
-use App\Json;
 use App\Imports\BooksImport;
 use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 use Session;
 
 class HomeController extends Controller
@@ -24,6 +22,8 @@ class HomeController extends Controller
         return view('home');
     }
 
+
+
     public function find(Request $request)
     {
         $finder = $request->input('finder');
@@ -31,13 +31,12 @@ class HomeController extends Controller
         if ($finder[0] == '"' && $finder[strlen($finder) - 1] == '"') {
             $findme = trim($finder, '"');
 
-            $books = Book::where('ean', 'like', '%' . $findme . '%')
-                ->orWhere('titulo', 'like', '%' . $findme . '%')
-                ->orWhere('nombre_autor', 'LIKE', '%' . $findme . '%')
-                ->orWhere('apellido_autor', 'like', '%' . $findme . '%')
-                ->orWhere('metadata', 'like', '%' . $findme . '%')
-                ->orderBy('id', 'DESC')
-                ->paginate(50);
+            $books = Book::where('titulo', 'like',  $findme)
+                ->orWhere('nombre_autor', 'LIKE', $findme)
+                ->orWhere('apellido_autor', 'like', $findme)
+                /*->orWhere('metadata', 'like', '%' . $findme . '%')*/
+                ->orderBy('titulo', 'ASC')
+                ->get();
         } else {
             $findme = trim($finder, '"');
 
@@ -54,13 +53,15 @@ class HomeController extends Controller
                             /*->orWhere('metadata', 'LIKE', "%$string%")*/;
                     });
                 }
-            })->orderBy('id', 'DESC')
-                ->paginate(50);
+            })->orderBy('titulo', 'ASC')
+                ->get();
         }
 
         if (count($books) <= 0){
-            return view('viewdata', compact('books', 'finder'));
+            $books = Book::orderBy('id', 'ASC')->paginate(50);
+
             Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
+            return view('viewdata', compact('books', 'finder'));
         }else{
             return view('finderPage', compact('books', 'finder'));
         }
@@ -70,7 +71,7 @@ class HomeController extends Controller
 
     public function show()
     {
-        $books = Book::orderBy('id', 'DESC')->paginate(50);
+        $books = Book::orderBy('id', 'ASC')->paginate(50);
 
         return view('viewdata', compact('books'));
     }

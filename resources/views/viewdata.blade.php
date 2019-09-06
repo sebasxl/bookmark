@@ -13,6 +13,7 @@
 
 
             <div class="col-md-3">
+
                 <form action="{{ route('buscador')}}" method="get" role="search">
                     @csrf
                     <div class="input-group">
