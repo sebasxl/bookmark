@@ -25,6 +25,7 @@
             <li><a href="{{ route('show') }}"><i class="fa fa-circle-o"></i> Ver Datos</a></li>
             <li><a href="{{ route('importer') }}"><i class="fa fa-circle-o"></i> Importar Datos</a></li>
             <li><a href="{{ route('exporter') }}"><i class="fa fa-circle-o"></i> Exportar a Archivo</a></li>
+            <li><a href="{{ route('updateprices') }}"><i class="fa fa-circle-o"></i> Actualizar Precios</a></li>
           </ul>
         </li>
 

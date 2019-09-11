@@ -34,11 +34,11 @@
                 <div class="form-group">
                   <label for="file">Archivo:</label>
                   <input type="file" id="file" name="file">
-                
+
 
                   <p class="help-block">Solo se permiten archivos XLSX.</p>
                 </div>
-                
+
               </div>
               <!-- /.box-body -->
 

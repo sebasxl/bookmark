@@ -25,6 +25,8 @@ Route::get('/step3-datos-json/{id}', 'HomeController@handleJson')->name('handleJ
 Route::get('/verdatos', 'HomeController@show')->name('show');
 Route::get('/importardatos', 'HomeController@importer')->name('importer');
 Route::post('/importardatos', 'HomeController@handleImporter')->name('handleImporter');
+Route::get('/actualizarprecios', 'HomeController@updatePrices')->name('updateprices');
+Route::post('/actualizarprecios', 'HomeController@updatePricesPost')->name('updateprices.post');
 Route::get('/exportardatos', 'HomeController@exporter')->name('exporter');
 /* Route::get('/exportardatos', 'HomeController@exporter')->name('exporter'); */
 Route::get('/exportar-a-csv', 'HomeController@export')->name('export2csv');

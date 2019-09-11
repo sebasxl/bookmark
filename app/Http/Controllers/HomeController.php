@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UpdatePrices;
+use App\Jobs\UpdatePricesJob;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Book;
@@ -23,7 +26,6 @@ class HomeController extends Controller
     }
 
 
-
     public function find(Request $request)
     {
         $finder = $request->input('finder');
@@ -31,7 +33,7 @@ class HomeController extends Controller
         if ($finder[0] == '"' && $finder[strlen($finder) - 1] == '"') {
             $findme = trim($finder, '"');
 
-            $books = Book::where('titulo', 'like',  $findme)
+            $books = Book::where('titulo', 'like', $findme)
                 ->orWhere('nombre_autor', 'LIKE', $findme)
                 ->orWhere('apellido_autor', 'like', $findme)
                 /*->orWhere('metadata', 'like', '%' . $findme . '%')*/
@@ -49,20 +51,20 @@ class HomeController extends Controller
                             ->orWhere('ean', 'LIKE', "%$string%")
                             ->orWhere('titulo', 'LIKE', "%$string%")
                             ->orWhere('nombre_autor', 'LIKE', "%$string%")
-                            ->orWhere('apellido_autor', 'LIKE', "%$string%")
-                            /*->orWhere('metadata', 'LIKE', "%$string%")*/;
+                            ->orWhere('apellido_autor', 'LIKE', "%$string%")/*->orWhere('metadata', 'LIKE', "%$string%")*/
+                        ;
                     });
                 }
             })->orderBy('titulo', 'ASC')
                 ->get();
         }
 
-        if (count($books) <= 0){
+        if (count($books) <= 0) {
             $books = Book::orderBy('id', 'ASC')->paginate(50);
 
             Session::flash('flash_message', 'No hay resultados con estos términos. Intente otra búsqueda');
             return view('viewdata', compact('books', 'finder'));
-        }else{
+        } else {
             return view('finderPage', compact('books', 'finder'));
         }
 
@@ -84,6 +86,25 @@ class HomeController extends Controller
     public function importer()
     {
         return view('importfile');
+    }
+
+    public function updatePrices()
+    {
+        return view('updateprices');
+    }
+
+    public function updatePricesPost(Request $request)
+    {
+        if ($file = $request->file('file')) {
+            $name = $file->getClientOriginalName();
+
+            $originalFile = $file->move('files', $name);
+            $path = $originalFile->getRealPath();
+
+            Excel::import(new UpdatePrices, $path);
+        }
+
+        return redirect()->route('show');
     }
 
     public function importExamples()
